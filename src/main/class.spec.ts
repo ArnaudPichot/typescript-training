@@ -4,7 +4,12 @@ describe('class', () => {
     // Create a Musician class
     // Add a constructor that takes one param, the instrument.
     // Set this.instrument to the instrument passed in
-
+    class Musician {
+      instrument: string;
+      constructor(instrument: string) {
+        this.instrument = instrument;
+      }
+    }
     const musician = new Musician()
     const ringo = new Musician('drums')
 
@@ -15,6 +20,12 @@ describe('class', () => {
   it('constructor can have default param values', () => {
     // Create a Musician class with a constructor
     // Make your class default (using default params) the instrument to 'guitar'
+    class Musician {
+      instrument = '';
+      constructor(instrument = 'guitar') {
+        this.instrument = instrument;
+      }
+    }
 
     const john = new Musician()
     const ringo = new Musician('drums')
@@ -26,7 +37,15 @@ describe('class', () => {
   it('can have instance methods', () => {
     // Create a Musician class, pass in the instrument to the constructor,
     // and add a play function to the class definition
-
+    class Musician {
+      instrument = 'guitar';
+      constructor(instrument: string) {
+        this.instrument = instrument;
+      }
+      play() {
+        return ("I'm playing drums")
+      }
+    }
     const musician = new Musician()
 
     expect(musician.play).toBeDefined()
@@ -39,6 +58,21 @@ describe('class', () => {
     // create a static property instances (that will hold all created instances) and
     // create a static method create that encapsulates calling constructor
     //   and storing the reference (in instances array) and returns the instance
+
+    class Musician {
+      static instances = [];
+      instrument = '';
+
+      constructor(instrument = 'guitar') {
+        this.instrument = instrument;
+      }
+      play() {
+        return ("I'm playing drums")
+      }
+      static create() {
+        Musician.instances.push(Musician.instances);
+      }
+    }
 
     expect(Musician.create).toBeDefined()
     expect(Musician.instances.length).toBe(0)
@@ -57,6 +91,25 @@ describe('class', () => {
     // Create a Rockman class that extends Musician
     // Add play method to Musician
 
+    class Musician {
+      // static instances = [];
+      instrument = '';
+
+      constructor(instrument = 'guitar') {
+        this.instrument = instrument;
+      }
+      play() {
+        return ("I'm playing guitar")
+      }
+      /*static create() {
+        Musician.instances.push(Musician.instances);
+      }*/
+    }
+
+    class Rockman extends Musician {
+
+    }
+
     const rockman = new Rockman()
 
     expect(rockman instanceof Rockman).toBe(true)
@@ -67,6 +120,16 @@ describe('class', () => {
   it('can use property setters and getters', () => {
     // Create a Musician class, pass in the instrument to the constructor,
     // Add property getter for description
+
+    class Musician {
+      instrument = '';
+      constructor(instrument) {
+        this.instrument = instrument;
+      }
+      get description() {
+        return ('this musician plays ' + this.instrument);
+      };
+    }
 
     const guitarist = new Musician('guitar')
     const drummer = new Musician('drums')
@@ -82,6 +145,18 @@ describe('class', () => {
     // Add property setter for band
     // - it will add this band to the list of musician's bands'. How to store them?
 
+    class Musician {
+      private _band = [];
+      constructor() {
+
+      }
+      get allBands() {
+        return ('this musician played in ' + this._band.join(', '));
+      }
+      set band(newBand: string) {
+        this._band.push(newBand);
+      }
+    }
     const musician = new Musician()
 
     musician.band = 'ABBA'
