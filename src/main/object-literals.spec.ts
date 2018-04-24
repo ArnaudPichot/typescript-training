@@ -12,7 +12,12 @@ describe('enhanced object literals', () => {
         // wantsToPlayWith: function (target){
         //   return `${this.name} wants to play with ${target.name} ${target.dead ? 'but he is' : 'and he is not'} dead`;
         // }
-        // - do that in ES6 !
+        // - do that in ES6 !  let square = n => { square: n * n };
+        name,
+        dead,
+        wantsToPlayWith: function (target) {
+          return `${this.name} wants to play with ${target.name} ${target.dead ? 'but he is' : 'and he is not'} dead`;
+        }
       }
     }
 
