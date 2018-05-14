@@ -1,6 +1,6 @@
-describe('Closures', function(){
+describe('Closures', function () {
 
-	it('can hold private data - incrementer', function(){
+	it('can hold private data - incrementer', function () {
 		// write incrementer function below
 		// each `incrementer` call returns a function which, when called, increments the counter with +1 and returns the new value
 		// the initial value of the counter is 0
@@ -9,6 +9,13 @@ describe('Closures', function(){
 		// define incrementer function here
 		// try to define function signature
 
+		var incrementer = (function () {
+			var n = 0;
+			return function () {
+				n += 1;
+				return n;
+			}
+		});
 		var inc1 = incrementer();
 		expect(inc1()).toEqual(1);
 		expect(inc1()).toEqual(2);
@@ -20,7 +27,7 @@ describe('Closures', function(){
 		expect(inc2()).toEqual(4);
 	});
 
-	it('can hold private data - counter', function(){
+	it('can hold private data - counter', function () {
 		// write counter function below
 		// each `counter` call returns an object with 2 functions, inc and dec
 		// `inc`, when called, acts as `incrementer` above
@@ -30,6 +37,21 @@ describe('Closures', function(){
 
 		// define counter function here
 		// try to define function signature
+
+		function counter() {
+			var n = 0;
+			var _counter = {
+				inc: function () {
+					n += 1;
+					return n;
+				},
+				dec: function () {
+					n -= 1;
+					return n;
+				}
+			}
+			return _counter;
+		}
 
 		var c1 = counter();
 		expect(c1.inc()).toEqual(1);
@@ -43,7 +65,7 @@ describe('Closures', function(){
 		expect(c2.dec()).toEqual(-2);
 	});
 
-	it('can encapsulate domain logic', function(){
+	it('can encapsulate domain logic', function () {
 		// write finanseStorage function which will hold information about personal finanseStorage
 		// it will store all incomes and outcomes (numbers),
 		// each separately added via `saveIncome`/`saveOutcome` method.
@@ -51,7 +73,28 @@ describe('Closures', function(){
 
 		// define finanseStorage function here
 		// try to define function signature
-
+		function finanseStorage() {
+			var _saveIncome = 0;
+			var _saveOutcome = 0;
+			var _counter = {
+				saveIncome: function (a) {
+					_saveIncome += a;
+					return _saveIncome;
+				},
+				saveOutcome: function (a) {
+					_saveOutcome += a;
+					return _saveOutcome;
+				},
+				getBalance: function () {
+					//return (Math.round(_saveIncome - _saveOutcome).toFixed(2));
+					if (Number.isInteger(_saveIncome - _saveOutcome)) {
+						return (_saveIncome - _saveOutcome);
+					  }
+					  return parseFloat((_saveIncome - _saveOutcome).toFixed(2));
+				}
+			}
+			return _counter;
+		}
 		var f1 = finanseStorage();
 		expect(f1.getBalance()).toEqual(0);
 		f1.saveIncome(1500);
