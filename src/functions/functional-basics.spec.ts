@@ -1,4 +1,4 @@
-describe('Functional programming', function(){
+describe('Functional programming', function () {
 
 	var list3 = [3, 6, 12, 24, 36, 39, 51, 63];
 	var list5 = [5, 15, 30, 40, 45, 55, 105];
@@ -10,10 +10,20 @@ describe('Functional programming', function(){
 
 		// code should look like: collection.map(fn)
 
-		var multiplyBy3;
-		var multiplyBy5;
-		var list3times3;
-		var list5times5;
+		var multiplyBy3 = (num) => {
+			if (!isNaN(num)) {
+				return (num * 3);
+			}
+			return num.map(x => x * 3);
+		};
+		var multiplyBy5 = (num) => {
+			if (!isNaN(num)) {
+				return (num * 5);
+			}
+			return num.map(x => x * 5);
+		};
+		var list3times3 = multiplyBy3(list3);
+		var list5times5 = multiplyBy5(list5);
 
 		expect(typeof multiplyBy3).toEqual("function");
 		expect(multiplyBy3.length).toEqual(1);
@@ -32,9 +42,15 @@ describe('Functional programming', function(){
 
 		// code should look like: collection.map(fn).filter(fn)
 
-		var isEven;
-		var list3times3filteredEven;
-		var list5times5filteredEven;
+		var isEven = (num) => {
+			if (num % 2 == 0) {
+				return true;
+			}
+			return false;
+		};
+
+		var list3times3filteredEven = multiplyBy3(list3).filter(x => isEven(x));
+		var list5times5filteredEven = multiplyBy5(list5).filter(x => isEven(x));
 
 		expect(typeof isEven).toEqual("function");
 		expect(isEven.length).toEqual(1);
@@ -50,9 +66,11 @@ describe('Functional programming', function(){
 
 		// code should look like: collection.map(fn).filter(fn).reduce(fn)
 
-		var sum;
-		var list3times3filteredEvenSum;
-		var list5times5filteredEvenSum;
+		var sum = (num1, num2) => {
+			return num1 + num2;
+		};
+		var list3times3filteredEvenSum = multiplyBy3(list3).filter(x => isEven(x)).reduce(sum);
+		var list5times5filteredEvenSum = multiplyBy5(list5).filter(x => isEven(x)).reduce(sum);
 
 		expect(typeof sum).toEqual("function");
 		expect(sum.length).toEqual(2);
@@ -61,12 +79,12 @@ describe('Functional programming', function(){
 		expect(list5times5filteredEvenSum).toEqual(350);
 	});
 
-	it('reverses lists', function(){
+	it('reverses lists', function () {
 		// reverse both arrays
 		// but be careful - don't alter original arrays!
 
-		var list3reversed;
-		var list5reversed;
+		var list3reversed = list3.slice().reverse();
+		var list5reversed = list5.slice().reverse();
 
 		expect(list3reversed).toEqual([63, 51, 39, 36, 24, 12, 6, 3]);
 		expect(list3).toEqual([3, 6, 12, 24, 36, 39, 51, 63]);
@@ -79,20 +97,26 @@ describe('Functional programming', function(){
 		// given above list of numbers, perform following calculations
 		// - take all numbers to the power of 3
 		// - summarize all the new elements which are odd (not even)
-		let result; // = ...
-
+		// let result; // = ...
+		var isEven = (num) => {
+			if (num % 2 == 0) {
+				return true;
+			}
+			return false;
+		};
+		let result = numbers.map(x => x * x * x).filter(x => !isEven(x)).reduce((n1, n2) => n1 + n2);
 		expect(result).toEqual(40359);
 	});
 
 	it('picks a single element (where .find does not apply)', () => {
-		let numbers = [{"val":2},{"val":3},{"val":8},{"val":1},{"val":33},{"val":76},{"val":13},{"val":32},{"val":13}];
+		let numbers = [{ "val": 2 }, { "val": 3 }, { "val": 8 }, { "val": 1 }, { "val": 33 }, { "val": 76 }, { "val": 13 }, { "val": 32 }, { "val": 13 }];
 		// use .reduce to find maximal and minimal item from above array
 
-		let maxValue; // = ...
-		let minValue; // = ...
+		let maxValue = {"val": numbers.reduce((a, c) => a < c.val ? a = c.val : a = a, 1)}; // = ...
+		let minValue = {"val": numbers.reduce((a, c) => a > c.val ? a = c.val : a = a, 1)}; // = ...
 
-		expect(maxValue).toEqual({val: 76});
-		expect(minValue).toEqual({val: 1});
+		expect(maxValue).toEqual({ val: 76 });
+		expect(minValue).toEqual({ val: 1 });
 	});
 
 	describe('algorithms', () => {
@@ -104,7 +128,7 @@ describe('Functional programming', function(){
 			// write function `gimmePairs` which accepts dynamic number of parameters
 			// and returns an array of all possible pairs
 
-			let gimmePairs;
+			let gimmePairs = num => {for()};
 
 			expect(gimmePairs(1)).toEqualJSON([]);
 			expect(gimmePairs(1, 2)).toEqualJSON([[1, 2]]);
